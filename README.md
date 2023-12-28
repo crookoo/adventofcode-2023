@@ -18,3 +18,4 @@ Example: ```node 1``` to execute 1.js in the same directory.
 | [Day 7: Camel Cards](https://github.com/crookoo/adventofcode-2023/tree/main/day07)| ⭐ | ⭐ |
 | [Day 8: Haunted Wasteland](https://github.com/crookoo/adventofcode-2023/tree/main/day08)| ⭐ ||
 | [Day 9: Mirage Maintenance](https://github.com/crookoo/adventofcode-2023/tree/main/day09)| ⭐ | ⭐ |
+| [Day 9: Pipe Maze](https://github.com/crookoo/adventofcode-2023/tree/main/day10)| ⭐ ||
