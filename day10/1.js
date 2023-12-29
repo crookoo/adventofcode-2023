@@ -4,6 +4,8 @@ const rawInput = readInputFromFile('input', import.meta.url);
 const input = rawInput.split('\n').map(line => line.split(''));
 
 
+/* Part one */
+
 function findCoordinatesOfS(input) {
     for (let i = 0; i < input.length; i++) {
         for (let j = 0; j < input[i].length; j++) {
@@ -45,7 +47,12 @@ let currentTile = input[rowFirstStep][colFirstStep];
 let rowCurrent = rowFirstStep;
 let colCurrent = colFirstStep;
 
+let loopTiles = new Map();
+loopTiles.set(`${rowS}-${colS}`, 'S');
+
 while (currentTile !== 'S') {
+    loopTiles.set(`${rowCurrent}-${colCurrent}`, currentTile);
+
     let rowDifference = rowCurrent - rowLast;
     let colDifference = colCurrent - colLast;
     rowLast = rowCurrent;
@@ -78,3 +85,57 @@ while (currentTile !== 'S') {
 
 console.log(countSteps / 2);
 // 6690 correct
+
+
+/* Part two */
+
+let countEnclosedTiles = 0;
+let outsideTheLoop = true;
+let activeF = false;
+let activeL = false;
+
+for (let i = 0; i < input.length; i++) {
+    let insideOfLoopCounter = 0;
+
+    for (let j = 0; j < input[i].length; j++) {
+        const tile = input[i][j];
+        const tilePartOfTheLoop = loopTiles.has(`${i}-${j}`);
+
+        if (tilePartOfTheLoop) {
+            switch (tile) {
+                case '|':
+                    insideOfLoopCounter++;
+                    break;
+                case 'S':
+                case 'F':
+                    activeF = true;
+                    break;
+                case 'L':
+                    activeL = true;
+                    break;
+                case 'J':
+                    if (activeF) {
+                        insideOfLoopCounter++;
+                        activeF = false;
+                    }
+                    activeL = false;
+                    break;
+                case '7':
+                    if (activeL) {
+                        insideOfLoopCounter++;
+                        activeL = false;
+                    }
+                    activeF = false;
+                    break;
+            }
+        }
+
+        outsideTheLoop = insideOfLoopCounter % 2 === 1 ? false : true;
+
+        if (!tilePartOfTheLoop && !outsideTheLoop) countEnclosedTiles++;
+
+    }
+}
+
+console.log(countEnclosedTiles);
+// 525 correct
